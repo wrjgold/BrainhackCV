@@ -7,6 +7,7 @@ import cv2
 import torchvision
 from model import SiameseNetwork
 from inference import infer
+import gdown
 
 def val(model):
     # check the hardware
@@ -57,6 +58,9 @@ def val(model):
     print(f'precision = {precision} recall = {recall}')
 
 model = SiameseNetwork()
+model_id = '1MSUtLHjFWsUU6KIoI59C1fl-DmpSRU27'
+output = 'reid_model.pt'
+gdown.download(url, output, quiet = False)
 model.load_state_dict(tt.load('reid_model.pt')) # file path to trained model
 if tt.cuda.is_available():
     print('model cuda successful')
