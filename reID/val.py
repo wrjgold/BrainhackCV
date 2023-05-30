@@ -17,7 +17,7 @@ def val(model):
 
     #loading the validation data
     val_dir = '/content/drive/MyDrive/Brainhack/ReID/datasets/testDataset' # file path to validation dataset
-    val_dataset = SiameseDataset(val_dir, transform=Transforms)
+    val_dataset = SiameseDataset(val_dir, transform=Transforms())
     val_dataloader = DataLoader(val_dataset, num_workers=4,batch_size=1,shuffle=True)
 
     #test the network
@@ -57,9 +57,9 @@ def val(model):
     print(f'precision = {precision} recall = {recall}')
 
 model = SiameseNetwork()
-model_id = '1MSUtLHjFWsUU6KIoI59C1fl-DmpSRU27'
-output = 'reid_model.pt'
-gdown.download(model_id, output, quiet = False)
+#model_id = '1MSUtLHjFWsUU6KIoI59C1fl-DmpSRU27'
+#output = 'reid_model.pt'
+#gdown.download(model_id, output, quiet = False)
 model.load_state_dict(tt.load('reid_model.pt')) # file path to trained model
 if tt.cuda.is_available():
     print('model cuda successful')

@@ -12,10 +12,11 @@ class SiameseNetwork(nn.Module):
         self.fc1 = nn.Sequential(
             nn.Linear(self.fc_in_features, 1024),
             nn.ReLU(inplace=True),
-            nn.Dropout2d(p=0.5),
+            nn.Dropout2d(p=0.3),
             
             nn.Linear(1024, 128),
             nn.ReLU(inplace=True),
+            nn.Dropout2d(p=0.3),
             
             nn.Linear(128,2))
         
