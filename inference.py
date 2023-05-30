@@ -5,8 +5,10 @@ import pandas as pd
 import gdown
 from reID.model import SiameseNetwork
 from reID.inference import infer
+import gdown
 
-yolo_model = torch.hub.load(wrjgold/BrainhackCV, 'best.pt', source='github')
+!gdown https://drive.google.com/file/d/1-YNxQ1EORYLcKVnKC1V5GZSB6aov0Ivn/view?usp=sharing
+yolo_model = model('best.pt')
 
 reid_model = SiameseNetwork()
 reid_url = "https://drive.google.com/file/d/1MSUtLHjFWsUU6KIoI59C1fl-DmpSRU27/view?usp=sharing"
