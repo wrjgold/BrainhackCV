@@ -5,6 +5,7 @@ import torch
 from dataset import SiameseDataset
 from model import SiameseNetwork
 from transforms import Transforms
+from inference import infer
 # from utils import DeviceDataLoader, accuracy, get_default_device, to_device
 import torch.nn as nn
 import torch.nn.functional as F
@@ -45,14 +46,27 @@ def main():
         counter=[]
         iteration_number = 0
         for epoch in range(1,epochs):
+            train_loss = torch.Tensor([])
             for i, data in enumerate(train_dataloader,0):
                 img0, img1 , label = data
+                print(img0.shape, img1.shape)
+                print(f'label is {label}')
                 img0, img1 , label = img0.cuda(), img1.cuda() , label.cuda()
                 optimizer.zero_grad()
                 output1,output2 = net(img0,img1)
+                #print(f'output1 is {output1}')
                 loss_contrastive = criterion(output1,output2,label)
+                print(loss_contrastive)
                 loss_contrastive.backward()
                 optimizer.step()    
+                for i in range (0,32):
+                  print(torch.unsqueeze(img0[i], dim=0).shape)
+                  pred = torch.Tensor([infer(net, torch.unsqueeze(img0[i], dim=0), torch.unsqueeze(img1[i], dim =0))])[0, 0]
+                  print(pred)
+                  train_loss = torch.cat(train_loss, pred) #error with this line 
+                  #TypeError: cat() received an invalid combination of arguments - got (Tensor, Tensor), but expected one of:
+                  #* (tuple of Tensors tensors, int dim, *, Tensor out)
+                print(f'prediction {pred}')
             print("Epoch {}\n Current loss {}\n".format(epoch,loss_contrastive.item()))
             iteration_number += 10
             counter.append(iteration_number)
