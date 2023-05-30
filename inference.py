@@ -5,6 +5,7 @@ import pandas as pd
 import gdown
 from reID.model import SiameseNetwork
 from reID.inference import infer
+from reID.transforms import Transforms
 import os
 
 yolo_url = "https://drive.google.com/file/d/1-YNxQ1EORYLcKVnKC1V5GZSB6aov0Ivn/view?usp=sharing"
@@ -34,14 +35,19 @@ def detect(image_name):
     suspect = cv2.imread(suspect_path)
     
     results = yolo_model(img)
+    boxes = results[0].boxes
 
-    for r in results:
-        boxes = r.boxes
-        for box in boxes:
-            x1,y1,x2,y2 = box.xyxyn
-            plushie = img[y1:y2, x1:x2]            
-            classification, _ = infer(reid_model, plushie, suspect)
-            objects_detected.append({'image_id': image_path, 'class': classification, 'ymin':y1, 'xmin':x1, 'ymax':y2, 'xmax':x2 })
+    for box in boxes:
+      t = Transforms()
+      #print(box.xyxy.shape)
+      x1n,y1n,x2n,y2n = torch.squeeze(box.xyxyn).tolist()
+      x1,y1,x2,y2 = torch.squeeze(box.xyxy).tolist()
+      # [[1,2], [2,3]] -> (2,2)
+      #print(int(x1),int(y1),int(x2),y2)
+      plushie = img[int(y1):int(y2), int(x1):int(x2)] 
+      #print(plushie.shape())           
+      classification, _ = infer(reid_model, plushie, suspect, Transforms())
+      objects_detected.append({'image_id': image_path, 'class': classification, 'ymin':y1n, 'xmin':x1n, 'ymax':y2n, 'xmax':x2n })
     return objects_detected
 
 with open(test_dir, 'r') as testSet:
