@@ -2,9 +2,9 @@ import torch.nn.functional as F
 import torch as tt
 
 
-def infer(model, img, target, transform=None):
+def infer(model, img, target, transform = None):
     device = tt.device('cuda' if tt.cuda.is_available() else 'cpu')
-    output1, output2 = transform(output1), transform(output2)
+    img, target = transform(img), transform(target)
     #generate the embedding vectors using loaded model
     output1,output2 = model(img.to(device),target.to(device)) 
 
