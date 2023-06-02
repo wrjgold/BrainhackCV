@@ -6,14 +6,14 @@ import random
 import shutil
 
 current_dir = os.getcwd()
-train_dir = os.path.join(current_dir, 'datasets', 'labels', 'trainSet')
-val_dir = os.path.join(current_dir, 'datasets', 'labels', 'valSet')
+train_dir = os.path.join(current_dir, 'datasets', 'labels', 'trainSet', 'train_labels')
+val_dir = os.path.join(current_dir, 'datasets', 'labels', 'valSet', 'val_labels')
 #test_dir = os.path.join(current_dir, 'yolov5', 'custom_dataset','labels', 'test')
 
 labels_dir = os.path.join(current_dir, 'datasets', 'labels')
 
-dest_train_path = os.path.join(current_dir, 'datasets', 'images' , 'trainSet')
-dest_val_path = os.path.join(current_dir, 'datasets', 'images' , 'valSet')
+dest_train_path = os.path.join(current_dir, 'datasets', 'images' , 'trainSet', 'train_images')
+dest_val_path = os.path.join(current_dir, 'datasets', 'images' , 'valSet', 'val_images')
 #dest_test_path = os.path.join(current_dir, 'yolov5', 'custom_dataset', 'images' , 'test')
 dest_labels_train_path = os.path.join(current_dir, 'datasets', 'labels' , 'trainSet')
 dest_labels_val_path = os.path.join(current_dir, 'datasets', 'labels' , 'valSet')
@@ -24,6 +24,7 @@ label_files = os.listdir(train_dir)
 
 for label_file in label_files:
     data = []
+    print(label_file)
     with open(os.path.join(train_dir, label_file), 'r') as wf:
         #print(os.path.join(train_dir, label_file))
         for line in wf:
