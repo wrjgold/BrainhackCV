@@ -6,7 +6,7 @@ The training and inference code are collated onto one single notebook.
 
 Here are the steps to run it on Colab:
 1. Open the notebook on Colab
-2. Clone this github repository
+2. Clone this github repository (https://github.com/wrjgold/BrainhackCV.git)
 3. Run all the commands in the notebook for training and inference.
 
 Note:
