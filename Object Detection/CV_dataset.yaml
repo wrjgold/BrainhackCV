@@ -1,6 +1,6 @@
-path: datasets
-train: images/trainSet/train_images
-val: images/valSet/val_images
-test: images/testSet/test_images
+path: .
+train: images/trainSet
+val: images/valSet
+test: images/testSet
 names:
   0: toy
