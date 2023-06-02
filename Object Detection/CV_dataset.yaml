@@ -1,4 +1,4 @@
-path: /content/drive/MyDrive/Brainhack/datasets
+path: datasets
 train: images/trainSet
 val: images/valSet
 test: images/testSet
